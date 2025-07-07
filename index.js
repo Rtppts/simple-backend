@@ -3,17 +3,21 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const { Pool } = require('pg');
 
-// โหลด environment variables
+// โหลดค่า environment variables
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3001;
 
-// เชื่อมต่อกับ PostgreSQL
+// ใช้ตัวแปรจาก .env ที่ตั้งค่าใน Railway
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,  // ใช้ DATABASE_URL จาก .env
+  host: process.env.PGHOST,        // PGHOST จาก Railway
+  port: process.env.PGPORT,        // PGPORT จาก Railway
+  user: process.env.POSTGRES_USER, // POSTGRES_USER จาก Railway
+  password: process.env.PGPASSWORD, // PGPASSWORD จาก Railway
+  database: process.env.PGDATABASE, // PGDATABASE จาก Railway
   ssl: {
-    rejectUnauthorized: false,  // เชื่อมต่อด้วย SSL สำหรับ PostgreSQL บน Railway
+    rejectUnauthorized: false,     // เชื่อมต่อกับ PostgreSQL ผ่าน SSL
   },
 });
 
@@ -34,7 +38,7 @@ app.get('/names', async (req, res) => {
   }
 });
 
-// เพิ่มชื่อใหม่เข้าไปในฐานข้อมูล
+// เพิ่มชื่อใหม่ลงในฐานข้อมูล
 app.post('/names', async (req, res) => {
   const { name } = req.body;
   try {
@@ -58,5 +62,5 @@ app.delete('/names/:id', async (req, res) => {
 
 // เริ่มต้นเซิร์ฟเวอร์ที่พอร์ตที่กำหนด
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);  // พิมพ์ข้อความเมื่อเซิร์ฟเวอร์ทำงาน
+  console.log(`Server running on http://localhost:${port}`);
 });
