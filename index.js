@@ -17,7 +17,10 @@ const pool = new Pool({
   }),
 });
 
-app.use(cors());
+app.use(cors({
+  origin: '*', // อนุญาตให้ทุกโดเมนเข้าถึง
+}));
+
 app.use(express.json());
 
 // ดึงชื่อทั้งหมด
