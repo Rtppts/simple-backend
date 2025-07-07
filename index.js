@@ -20,7 +20,9 @@ const pool = new Pool({
 
 // ตั้งค่า CORS
 app.use(cors({
-  origin: '*',  // อนุญาตให้ทุกโดเมนเข้าถึง API
+  origin: '*', // หรือกำหนดเป็น 'http://localhost:5173' ถ้าต้องการให้อนุญาตแค่โดเมนนี้
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'], // ให้อนุญาต GET, POST, DELETE และ OPTIONS
+  allowedHeaders: ['Content-Type', 'Authorization'], // อนุญาตให้ใช้ headers เฉพาะที่จำเป็น
 }));
 
 app.use(express.json());
