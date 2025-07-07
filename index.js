@@ -1,23 +1,20 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const { Pool } = require('pg');
 
-// โหลดค่า environment variables
-dotenv.config();
-
+// เริ่มต้นแอปพลิเคชัน Express
 const app = express();
-const port = process.env.PORT || 3001;
+const port = 3001; // ใช้พอร์ต 3001 หรือพอร์ตที่ต้องการ
 
-// ใช้ตัวแปรจาก .env ที่ตั้งค่าใน Railway
+// ตั้งค่าการเชื่อมต่อกับ PostgreSQL โดยไม่ใช้ .env
 const pool = new Pool({
-  host: process.env.PGHOST,        // PGHOST จาก Railway
-  port: process.env.PGPORT,        // PGPORT จาก Railway
-  user: process.env.POSTGRES_USER, // POSTGRES_USER จาก Railway
-  password: process.env.PGPASSWORD, // PGPASSWORD จาก Railway
-  database: process.env.PGDATABASE, // PGDATABASE จาก Railway
+  user: 'postgres',  // ชื่อผู้ใช้ PostgreSQL
+  host: 'caboose.proxy.rlwy.net',  // Host ของ PostgreSQL จาก Railway
+  database: 'railway',  // ชื่อฐานข้อมูล PostgreSQL
+  password: 'zTxiggRrugvRIURgWUEsaFwfglMcHjRt',  // รหัสผ่าน PostgreSQL
+  port: 35539,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
   ssl: {
-    rejectUnauthorized: false,     // เชื่อมต่อกับ PostgreSQL ผ่าน SSL
+    rejectUnauthorized: false,  // ใช้ SSL สำหรับการเชื่อมต่อ
   },
 });
 
