@@ -11,7 +11,7 @@ const port = process.env.PORT || 3001;
 
 // เชื่อมต่อกับ PostgreSQL
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // ใช้ DATABASE_URL จาก .env
+  connectionString: process.env.DATABASE_URL,  // ใช้ DATABASE_URL จาก .env
   ssl: {
     rejectUnauthorized: false,  // เชื่อมต่อด้วย SSL สำหรับ PostgreSQL บน Railway
   },
