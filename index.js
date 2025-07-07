@@ -1,20 +1,20 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const { Pool } = require('pg');
 
-dotenv.config();
-
+// ตั้งค่าการเชื่อมต่อกับ PostgreSQL โดยใช้ตัวแปรที่ Railway ให้มา
 const app = express();
 const port = process.env.PORT || 3001;
 
-const isProduction = process.env.NODE_ENV === 'production';
-
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ...(isProduction && {
-    ssl: { rejectUnauthorized: false },
-  }),
+  host: process.env.PGHOST, // ใช้ PGHOST จาก Railway
+  port: process.env.PGPORT, // ใช้ PGPORT จาก Railway
+  user: process.env.PGUSER, // ใช้ PGUSER จาก Railway
+  password: process.env.PGPASSWORD, // ใช้ PGPASSWORD จาก Railway
+  database: process.env.PGDATABASE, // ใช้ PGDATABASE จาก Railway
+  ssl: {
+    rejectUnauthorized: false, // สำหรับการเชื่อมต่อกับ PostgreSQL บน Railway
+  },
 });
 
 app.use(cors({
