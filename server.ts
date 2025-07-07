@@ -6,12 +6,14 @@ import { Pool } from 'pg';
 
 const app = express();
 const port = 3001;
+const isProduction = process.env.NODE_ENV === 'production';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }, // สำหรับใช้งานกับ Railway
+  ...(isProduction && {
+    ssl: { rejectUnauthorized: false },
+  }),
 });
-
 
 app.use(cors());
 app.use(express.json());
