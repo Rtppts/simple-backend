@@ -12,7 +12,7 @@ const pool = new Pool({
   host: 'caboose.proxy.rlwy.net',  // Host ของ PostgreSQL จาก Railway
   database: 'railway',  // ชื่อฐานข้อมูล PostgreSQL
   password: 'zTxiggRrugvRIURgWUEsaFwfglMcHjRt',  // รหัสผ่าน PostgreSQL
-  port: 5432,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
+  port: 35539,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
   ssl: {
     rejectUnauthorized: false,  // ใช้ SSL สำหรับการเชื่อมต่อ
   },
@@ -22,49 +22,52 @@ const pool = new Pool({
 app.use(cors({
   origin: '*',  // อนุญาตให้ทุกโดเมนเข้าถึง API
   methods: ['GET', 'POST', 'DELETE', 'OPTIONS'], // อนุญาตให้ใช้ HTTP methods GET, POST, DELETE, OPTIONS
-  allowedHeaders: ['Content-Type', 'Authorization'], // อนุญาตให้ใช้ headers เฉพาะที่จำเป็น
+  allowedHeaders: '*', // อนุญาตให้ทุก header ผ่านได้
 }));
 
 app.use(express.json());
 
 // ดึงชื่อทั้งหมดจากฐานข้อมูล
 app.get('/names', async (req, res) => {
+  console.log('คำร้องส่งมาถึง Backend (GET /names)');  // ดีบัก
   try {
     const result = await pool.query('SELECT * FROM names ORDER BY id');
     res.json(result.rows);  // ส่งข้อมูลที่ดึงจากฐานข้อมูล
   } catch (err) {
     console.error('Error fetching names:', err);  // log ข้อความผิดพลาด
-    res.status(500).json({ error: 'Failed to fetch names from database', details: err.message });  // ส่งข้อความผิดพลาด
+    res.status(500).json({ error: 'เกิดข้อผิดพลาดในการดึงข้อมูลจากฐานข้อมูล', details: err.message });
   }
 });
 
 // เพิ่มชื่อใหม่ลงในฐานข้อมูล
 app.post('/names', async (req, res) => {
+  console.log('คำร้องส่งมาถึง Backend (POST /names)');  // ดีบัก
   const { name } = req.body;
   try {
     if (!name || name.trim() === "") {
       throw new Error("Name is required");  // ตรวจสอบว่า name ไม่ว่าง
     }
     await pool.query('INSERT INTO names(name) VALUES($1)', [name]);  // เพิ่มชื่อ
-    res.sendStatus(200);  // ส่งสถานะ 200 (สำเร็จ)
+    res.json({ message: 'ดำเนินการสำเร็จ' });  // ส่งข้อความตอบกลับเป็นภาษาไทย
   } catch (err) {
     console.error('Error adding name:', err);  // log ข้อความผิดพลาด
-    res.status(400).json({ error: 'Failed to add name', details: err.message });  // ส่งข้อความผิดพลาด
+    res.status(400).json({ error: 'ไม่สามารถเพิ่มชื่อได้', details: err.message });
   }
 });
 
 // ลบชื่อจากฐานข้อมูล
 app.delete('/names/:id', async (req, res) => {
+  console.log('คำร้องส่งมาถึง Backend (DELETE /names/:id)');  // ดีบัก
   const { id } = req.params;
   try {
     const result = await pool.query('DELETE FROM names WHERE id = $1', [id]);  // ลบชื่อ
     if (result.rowCount === 0) {
-      throw new Error('No name found with this ID');  // ถ้าไม่มีชื่อในฐานข้อมูลที่ตรงกับ ID
+      throw new Error('ไม่พบชื่อในฐานข้อมูลที่ตรงกับ ID นี้');  // ถ้าไม่มีชื่อในฐานข้อมูลที่ตรงกับ ID
     }
-    res.sendStatus(200);  // ส่งสถานะ 200 (สำเร็จ)
+    res.json({ message: 'ดำเนินการสำเร็จ' });  // ส่งข้อความตอบกลับเป็นภาษาไทย
   } catch (err) {
     console.error('Error deleting name:', err);  // log ข้อความผิดพลาด
-    res.status(400).json({ error: 'Failed to delete name', details: err.message });  // ส่งข้อความผิดพลาด
+    res.status(400).json({ error: 'ไม่สามารถลบชื่อได้', details: err.message });
   }
 });
 
