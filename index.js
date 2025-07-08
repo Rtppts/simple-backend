@@ -12,7 +12,7 @@ const pool = new Pool({
   host: 'postgres.railway.internal',  // Host ของ PostgreSQL จาก Railway
   database: 'railway',  // ชื่อฐานข้อมูล PostgreSQL
   password: 'zTxiggRrugvRIURgWUEsaFwfglMcHjRt',  // รหัสผ่าน PostgreSQL
-  port: 35539,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
+  port: 5432,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
   ssl: {
     rejectUnauthorized: false,  // ใช้ SSL สำหรับการเชื่อมต่อ
   },
