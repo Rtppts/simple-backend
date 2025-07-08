@@ -8,15 +8,14 @@ const port = 3001;  // ใช้พอร์ตจาก Railway ถ้ามี
 
 // ตั้งค่าการเชื่อมต่อกับ PostgreSQL บน Railway
 const pool = new Pool({
-  user: 'postgres',  // ชื่อผู้ใช้ PostgreSQL
-  host: 'caboose.proxy.rlwy.net',  // Host ของ PostgreSQL จาก Railway
-  database: 'railway',  // ชื่อฐานข้อมูล PostgreSQL
-  password: 'zTxiggRrugvRIURgWUEsaFwfglMcHjRt',  // รหัสผ่าน PostgreSQL
-  port: 35539,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
-  ssl: {
-    rejectUnauthorized: false,  // ใช้ SSL สำหรับการเชื่อมต่อ
-  },
+  user: 'postgres',
+  host: '3.27.158.103',  // Public IP ของ EC2
+  database: 'database1', // ชื่อฐานข้อมูล
+  password: '1234',      // รหัสผ่านใหม่ที่คุณตั้ง
+  port: 5432,            // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL
+  ssl: false,            // ปิดการใช้ SSL สำหรับทดสอบในเครื่อง
 });
+
 
 // ตั้งค่า CORS
 app.use(cors({
