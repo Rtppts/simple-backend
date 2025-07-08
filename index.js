@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 
 // เริ่มต้นแอปพลิเคชัน Express
 const app = express();
-const port = 3001;  // ใช้พอร์ตจาก Railway ถ้ามี หรือใช้ 3001
+const port = process.env.PORT || 3001;  // ใช้พอร์ตจาก Railway ถ้ามี หรือใช้ 3001
 
 // ตั้งค่าการเชื่อมต่อกับ PostgreSQL บน Railway
 const pool = new Pool({
@@ -29,6 +29,7 @@ app.use(express.json());
 
 // ดึงชื่อทั้งหมดจากฐานข้อมูล
 app.get('/names', async (req, res) => {
+  console.log('GET request to /names');  // ดีบัก
   try {
     const result = await pool.query('SELECT * FROM names ORDER BY id');
     res.json(result.rows);  // ส่งข้อมูลที่ดึงจากฐานข้อมูล
@@ -40,6 +41,7 @@ app.get('/names', async (req, res) => {
 
 // เพิ่มชื่อใหม่ลงในฐานข้อมูล
 app.post('/names', async (req, res) => {
+  console.log('POST request to /names');  // ดีบัก
   const { name } = req.body;
   try {
     if (!name || name.trim() === "") {
@@ -55,6 +57,7 @@ app.post('/names', async (req, res) => {
 
 // ลบชื่อจากฐานข้อมูล
 app.delete('/names/:id', async (req, res) => {
+  console.log('DELETE request to /names/:id');  // ดีบัก
   const { id } = req.params;
   try {
     const result = await pool.query('DELETE FROM names WHERE id = $1', [id]);  // ลบชื่อ
