@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 
 // เริ่มต้นแอปพลิเคชัน Express
 const app = express();
-const port = process.env.PORT || 3001;  // ใช้พอร์ตจาก Railway ถ้ามี หรือใช้ 3001
+const port = 3001;  // ใช้พอร์ตจาก Railway ถ้ามี หรือใช้ 3001
 
 // ตั้งค่าการเชื่อมต่อกับ PostgreSQL บน Railway
 const pool = new Pool({
@@ -12,7 +12,7 @@ const pool = new Pool({
   host: 'caboose.proxy.rlwy.net',  // Host ของ PostgreSQL จาก Railway
   database: 'railway',  // ชื่อฐานข้อมูล PostgreSQL
   password: 'zTxiggRrugvRIURgWUEsaFwfglMcHjRt',  // รหัสผ่าน PostgreSQL
-  port: 35539,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
+  port: 5432,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
   ssl: {
     rejectUnauthorized: false,  // ใช้ SSL สำหรับการเชื่อมต่อ
   },
