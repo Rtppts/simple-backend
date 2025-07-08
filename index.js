@@ -9,10 +9,10 @@ const port = 3001;  // ใช้พอร์ตจาก Railway ถ้ามี
 // ตั้งค่าการเชื่อมต่อกับ PostgreSQL บน Railway
 const pool = new Pool({
   user: 'postgres',  // ชื่อผู้ใช้ PostgreSQL
-  host: 'postgres.railway.internal',  // Host ของ PostgreSQL จาก Railway
+  host: 'caboose.proxy.rlwy.net',  // Host ของ PostgreSQL จาก Railway
   database: 'railway',  // ชื่อฐานข้อมูล PostgreSQL
   password: 'zTxiggRrugvRIURgWUEsaFwfglMcHjRt',  // รหัสผ่าน PostgreSQL
-  port: 5432,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
+  port: 35539,  // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL บน Railway
   ssl: {
     rejectUnauthorized: false,  // ใช้ SSL สำหรับการเชื่อมต่อ
   },
