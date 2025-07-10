@@ -8,13 +8,16 @@ const port = 3001;  // ใช้พอร์ตจาก Railway ถ้ามี
 
 // ตั้งค่าการเชื่อมต่อกับ PostgreSQL บน Railway
 const pool = new Pool({
-  user: 'postgres',
-  host: 'turntable.proxy.rlwy.net',  // Public IP ของ EC2
-  database: 'railway', // ชื่อฐานข้อมูล
-  password: 'owFsVgVwphTUbEfAERPeMrXRFCErnjCo',      // รหัสผ่านใหม่ที่คุณตั้ง
-  port: 46401,            // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL
-  ssl: false,            // ปิดการใช้ SSL สำหรับทดสอบในเครื่อง
+  user: 'postgres',                         // Username ที่ Railway สร้างให้
+  host: 'turntable.proxy.rlwy.net',        // Public TCP proxy ที่ Railway ให้
+  database: 'railway',                     // ชื่อ database
+  password: 'owFsVgVwphTUbEfAERPeMrXRFCErnjCo', // รหัสผ่านของคุณ
+  port: 46401,                              // Port เฉพาะของโปรเจคนี้ (ไม่ใช่ 5432)
+  ssl: {
+    rejectUnauthorized: false              // สำหรับอนุญาต SSL แบบไม่ตรวจ cert (ใช้ได้ใน Railway)
+  }
 });
+
 
 
 // ตั้งค่า CORS
