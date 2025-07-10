@@ -9,10 +9,10 @@ const port = 3001;  // ใช้พอร์ตจาก Railway ถ้ามี
 // ตั้งค่าการเชื่อมต่อกับ PostgreSQL บน Railway
 const pool = new Pool({
   user: 'postgres',
-  host: '3.27.158.103',  // Public IP ของ EC2
-  database: 'database1', // ชื่อฐานข้อมูล
-  password: '1234',      // รหัสผ่านใหม่ที่คุณตั้ง
-  port: 5432,            // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL
+  host: 'turntable.proxy.rlwy.net',  // Public IP ของ EC2
+  database: 'railway', // ชื่อฐานข้อมูล
+  password: 'owFsVgVwphTUbEfAERPeMrXRFCErnjCo',      // รหัสผ่านใหม่ที่คุณตั้ง
+  port: 46401,            // พอร์ตที่ใช้เชื่อมต่อกับ PostgreSQL
   ssl: false,            // ปิดการใช้ SSL สำหรับทดสอบในเครื่อง
 });
 
